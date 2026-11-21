@@ -1,0 +1,24 @@
+{
+  "required": true,
+  "package": "cn.blockforge.generated.awesomespears.mixin",
+  "minVersion": "0.8",
+  "mixins": [
+    "ApplyEntityImpulseMixin",
+    "EnchantmentHelperMixin",
+    "LivingEntityMixin",
+    "KineticWeaponMixin",
+    "PiercingWeaponMixin",
+    "PlayerMixin",
+    "ProjectileUtilMixin",
+    "ServerGamePacketListenerImplMixin"
+  ],
+  "client": [
+    "MinecraftClientMixin",
+    "client.ModListScreenMixin",
+    "client.ModListEntryMixin",
+    "client.ModListSortMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
