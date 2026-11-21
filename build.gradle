@@ -1,0 +1,42 @@
+plugins {
+    id 'net.fabricmc.fabric-loom' version "${loom_version}"
+}
+
+// 构建轮次 -rN 只用于本机测试 jar 的文件名（成品\测试版本）：写在 round.properties（mod_round=N）；
+// 没有这个文件时 jar 不带 -rN。模组内部显示的版本号不带 rN。
+def roundFile = file('round.properties')
+def roundProps = new Properties()
+if (roundFile.exists()) { roundFile.withInputStream { roundProps.load(it) } }
+def modRound = roundProps.getProperty('mod_round', '').trim()
+version = project.mod_version
+group = project.maven_group
+
+repositories {
+    mavenCentral()
+    maven { url = "https://maven.terraformersmc.com/releases/" }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    // Mod Menu 只在编译期可见：装了它就能从模组列表打开配置界面，没装也不影响运行
+    compileOnly("com.terraformersmc:modmenu:${project.modmenu_version}") { transitive = false }
+}
+
+processResources {
+    inputs.property "version", project.version
+    // 不显式设成 UTF-8 时按平台默认编码读写，会把描述里的中文写坏
+    filteringCharset = 'UTF-8'
+    // 只替换版本占位符（expand 会把 JSON 字符串里的 \n 变成真换行，弄坏 fabric.mod.json）
+    filesMatching("fabric.mod.json") {
+        filter { line -> line.replace('${version}', project.version.toString()) }
+    }
+}
+
+tasks.withType(JavaCompile).configureEach { options.release = 25; options.encoding = 'UTF-8' }
+java { toolchain.languageVersion = JavaLanguageVersion.of(25) }
+base { archivesName = project.archives_base_name }
+
+if (modRound) {
+    tasks.withType(Jar).configureEach { archiveVersion = project.version.toString() + "-r${modRound}" }
+}
