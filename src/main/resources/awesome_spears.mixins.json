@@ -1,0 +1,23 @@
+{
+  "required": true,
+  "package": "cn.blockforge.generated.awesomespears.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
+  "mixins": [
+    "LivingEntityAccessor",
+    "LivingEntityMixin",
+    "PlayerMixin",
+    "SpearItemInvoker",
+    "SpearItemMixin"
+  ],
+  "client": [
+    "LocalPlayerMixin",
+    "MinecraftClientMixin",
+    "client.ModListScreenMixin",
+    "client.ModListEntryMixin",
+    "client.ModListSortMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

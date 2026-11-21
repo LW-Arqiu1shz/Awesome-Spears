@@ -1,0 +1,37 @@
+modLoader="javafml"
+loaderVersion="${loader_version_range}"
+license="LGPL-3.0-only (code), CC-BY-NC-SA-4.0 (assets)"
+logoFile="icon.png"
+[[mods]]
+modId="${mod_id}"
+version="${mod_version}"
+displayName="${mod_name}"
+authors="Arqiu-owo"
+description='''突进附魔太爱吃饭了，它怎么吃得比我还多？突进长矛看起来是个很好的鞘翅起飞装置，但它居然不能在空中用？附了突进的长矛自带的这么好的加速手段，居然不能和右键的冲锋一起用？我长矛击退哪去了？为什么怪在我攻击范围里我戳不到它？明明我瞄着天，为什么还是只能横着冲？为什么我在水里冲不动？相信我，安装这个模组之后，以上的烦恼统统会烟消云散的。希望如此。
+
+The Lunge enchantment is an absolute glutton - how does it manage to consume even more than I do? The Lunge spear seems like a perfect tool for taking flight with an elytra, but why it’s unusable while airborne? And why can’t I combine the built-in speed boost from the enchantment with the spear’s own right-click charge attack? Where did the knockback go? Why can’t I land a hit on a mob that’s clearly within my attack range? Hey, I’m aiming toward the sky, but why do I still end up dashing sideways? And why can’t I seem to move forward when I’m in the water? Trust me: once you install this mod, all these frustrations will vanish into thin air. Hopefully.'''
+
+[[mixins]]
+config="awesome_spears.mixins.json"
+
+[[dependencies.awesome_spears]]
+modId="neoforge"
+type="required"
+versionRange="[${neo_version},)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.awesome_spears]]
+modId="minecraft"
+type="required"
+versionRange="${minecraft_version_range}"
+ordering="NONE"
+side="BOTH"
+
+# 1.21.1 没有原版长矛，本模组改的是 Spear Core（矛核心）提供的长矛，没装它无法使用
+[[dependencies.awesome_spears]]
+modId="spearcore"
+type="required"
+versionRange="${spearcore_version_range}"
+ordering="AFTER"
+side="BOTH"
