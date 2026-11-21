@@ -1,0 +1,59 @@
+plugins {
+    id 'eclipse'
+    id 'net.minecraftforge.gradle' version '[6.0.16,6.2)'
+    id 'org.spongepowered.mixin' version '0.7.+'
+}
+// 构建轮次 -rN 只用于本机测试 jar 的文件名（成品\测试版本）：写在 round.properties（mod_round=N）；
+// 没有这个文件时 jar 不带 -rN。模组内部显示的版本号不带 rN。
+def roundFile = file('round.properties')
+def roundProps = new Properties()
+if (roundFile.exists()) { roundFile.withInputStream { roundProps.load(it) } }
+def modRound = roundProps.getProperty('mod_round', '').trim()
+version = modRound ? "${mod_version}-r${modRound}" : mod_version
+group = mod_group_id
+base { archivesName = mod_id }
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+minecraft {
+    mappings channel: 'official', version: minecraft_version
+    runs {
+        server {
+            workingDirectory project.file('run')
+            args '--nogui'
+            mods { "${mod_id}" { source sourceSets.main } }
+        }
+    }
+}
+
+repositories {
+    // 前置 Spear Core 的 jar 放在 libs\ 里
+    flatDir { dirs 'libs' }
+}
+
+dependencies {
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    // Spear Core：编译期可见，开发环境 runServer 时也加载；不打进本模组 jar（玩家需要单独安装）
+    compileOnly fg.deobf("local:spearcore-1.20.1-forge:3.2.1")
+    runtimeOnly fg.deobf("local:spearcore-1.20.1-forge:3.2.1")
+}
+
+mixin {
+    add sourceSets.main, 'awesome_spears.refmap.json'
+    config 'awesome_spears.mixins.json'
+    quiet
+}
+
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
+
+processResources {
+    def props = [minecraft_version_range: minecraft_version_range, forge_version: forge_version,
+                 loader_version_range: loader_version_range, mod_id: mod_id, mod_name: mod_name,
+                 mod_version: mod_version, spearcore_version_range: spearcore_version_range]
+    inputs.properties props
+    filteringCharset = 'UTF-8'
+    filesMatching('META-INF/mods.toml') { expand props }
+}
+
+// 1.20.1 正式环境是 SRG 名，每次 jar 之后必须重混淆
+tasks.named('jar') { finalizedBy 'reobfJar' }

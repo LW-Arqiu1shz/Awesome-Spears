@@ -1,0 +1,11 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        maven { url = 'https://maven.minecraftforge.net/' }
+    }
+}
+plugins {
+    // 本机没装 JDK 17：让 Gradle 自动下载一个给 1.20.1 用
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.8.0'
+}
+rootProject.name = 'awesome_spears-1.20.1Forge'
