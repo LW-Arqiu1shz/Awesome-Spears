@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "awesome_spears",
+  "version": "${version}",
+  "name": "Awesome Spears",
+  "icon": "icon.png",
+  "license": ["LGPL-3.0-only", "CC-BY-NC-SA-4.0"],
+  "authors": [
+    "Arqiu-owo"
+  ],
+  "description": "突进附魔太爱吃饭了，它怎么吃得比我还多？突进长矛看起来是个很好的鞘翅起飞装置，但它居然不能在空中用？附了突进的长矛自带的这么好的加速手段，居然不能和右键的冲锋一起用？我长矛击退哪去了？为什么怪在我攻击范围里我戳不到它？明明我瞄着天，为什么还是只能横着冲？为什么我在水里冲不动？相信我，安装这个模组之后，以上的烦恼统统会烟消云散的。希望如此。\n\nThe Lunge enchantment is an absolute glutton - how does it manage to consume even more than I do? The Lunge spear seems like a perfect tool for taking flight with an elytra, but why it’s unusable while airborne? And why can’t I combine the built-in speed boost from the enchantment with the spear’s own right-click charge attack? Where did the knockback go? Why can’t I land a hit on a mob that’s clearly within my attack range? Hey, I’m aiming toward the sky, but why do I still end up dashing sideways? And why can’t I seem to move forward when I’m in the water? Trust me: once you install this mod, all these frustrations will vanish into thin air. Hopefully.",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "cn.blockforge.generated.awesomespears.AwesomeSpears"
+    ],
+    "modmenu": [
+      "cn.blockforge.generated.awesomespears.client.AwesomeSpearsModMenu"
+    ]
+  },
+  "mixins": [
+    "awesome_spears.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.18.4",
+    "minecraft": "~26.1.2",
+    "java": ">=25"
+  },
+  "suggests": {
+    "modmenu": "*"
+  }
+}
